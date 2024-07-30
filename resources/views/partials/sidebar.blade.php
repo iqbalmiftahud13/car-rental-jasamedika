@@ -22,10 +22,14 @@
                     </li> --}}
                     <li class="menu-box">
                         <ul>
+                            {{-- <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                href="{{ route('dashboard') }}">
+                                <i data-feather="home"></i><span>Dashboard</span></a>
+                            </li> --}}
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
                                         data-feather="server"></i><span>Data Master</span></a>
                                 <ul class="sidebar-submenu">
-                                    <li><a href="#">Mobil</a></li>
+                                    <li><a href="{{ route('car.index') }}">Mobil</a></li>
                                 </ul>
                             </li>
                         </ul>
