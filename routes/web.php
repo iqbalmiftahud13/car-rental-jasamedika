@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\PegawaiController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CarController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,13 +22,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['admin'])->group(function () {
-    Route::prefix('pegawai')->group(function () {
-        Route::get('/', [PegawaiController::class, 'index'])->name('pegawai.index');
-        Route::post('/', [PegawaiController::class, 'store'])->name('pegawai.store');
-        Route::post('/pegawai/update', [PegawaiController::class, 'update'])->name('pegawai.update');
-        Route::delete('/delete/{id}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
-    });
+Route::middleware(['auth'])->group(function () {
+    Route::resource('car', CarController::class);
 });
 
 require __DIR__.'/auth.php';
