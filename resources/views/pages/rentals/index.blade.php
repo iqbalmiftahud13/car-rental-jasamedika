@@ -102,7 +102,7 @@
                     {
                         data: 'returned_at',
                         render: function (data) {
-                            return moment(data).format('DD-MM-YYYY | HH:mm:ss');
+                            return data ? moment(data).format('DD-MM-YYYY | HH:mm:ss') : "-";
                         }
                     },
                     {

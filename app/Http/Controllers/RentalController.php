@@ -16,7 +16,7 @@ class RentalController extends Controller
      */
     public function index()
     {
-        $rentals = Rental::where('user_id', auth()->id())->with(['user','car'])->get();
+        $rentals = Rental::with(['user','car'])->get();
         if (request()->ajax()) {
             return DataTables::of($rentals)->make(true);
         }

@@ -34,14 +34,16 @@
                                     <i data-feather="trending-up"></i><span>Peminjaman Mobil</span></a>
                                 </li>
                             @endif
+                            @if (Auth::check() && !Auth::user()->is_admin)
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
                                 href="{{ route('dashboard') }}">
                                 <i data-feather="dashboard"></i><span>Dashboard</span></a>
                             </li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
-                                href="{{ route('bookings.create') }}">
+                                href="{{ route('booking.index') }}">
                                 <i data-feather="trending-up"></i><span>Booking Mobil</span></a>
                             </li>
+                            @endif
                         </ul>
                     </li>
                 </ul>
