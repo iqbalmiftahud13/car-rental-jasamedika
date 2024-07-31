@@ -31,6 +31,7 @@
                                     <th>Total Hari</th>
                                     <th>Total Harga</th>
                                     <th>Status</th>
+                                    <th>Serah Terima Kunci</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -99,6 +100,12 @@
                         data: 'status',
                     },
                     {
+                        data: 'returned_at',
+                        render: function (data) {
+                            return moment(data).format('DD-MM-YYYY | HH:mm:ss');
+                        }
+                    },
+                    {
                         data: 'id',
                         width: '5%',
                         render: renderAction
@@ -110,11 +117,29 @@
             function renderAction(data, type, row, meta) {
                 let editUrl = `{{ route('rentals.edit', ':id') }}`.replace(':id', data);
                 let deleteUrl = `{{ route('rentals.destroy', ':id') }}`.replace(':id', data);
+                let returnUrl = `{{ route('rentals.returnForm', ':id') }}`.replace(':id', data);
+
                 let btn = ` <ul class="action" style="list-style: none;">
-                                <li class="edit"> <a href="${editUrl}" class="bg-transparent btnEdit btn"><i class="icon-pencil-alt"></i></a>
-                                <li class="delete"><button type="button" class="bg-transparent btn btnDeleteDt" data-url="${deleteUrl}"><i class="icon-trash"></i></button></li>
-                            </ul>`
-                return btn
+                                <li class="edit"> 
+                                    <a href="${editUrl}" class="bg-transparent btnEdit btn" data-toggle="tooltip" title="Ubah Data">
+                                        <i class="icon-pencil-alt"></i>
+                                    </a>
+                                </li>
+                                <li class="delete">
+                                    <button type="button" class="bg-transparent btn btnDeleteDt" data-url="${deleteUrl}" data-toggle="tooltip" title="Hapus">
+                                        <i class="icon-trash"></i>
+                                    </button>
+                                </li>`;
+
+                if (row.status !== 'returned') {
+                    btn += `<li class="return"><a href="${returnUrl}" class="bg-transparent btn text-warning" data-toggle="tooltip" title="Pengembalian"><i class="icon-angle-double-left"></i></a></li>`;
+                } else {
+                    btn += `<li class="returned"><span class="bg-transparent btn text-muted"><i class="icon-angle-double-left"></i></span></li>`;
+                }
+
+                btn += `</ul>`;
+
+                return btn;
             }
         });
 

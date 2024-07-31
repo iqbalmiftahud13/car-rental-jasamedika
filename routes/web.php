@@ -23,9 +23,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['admin'])->group(function () {
     Route::resource('car', CarController::class);
     Route::resource('rentals', RentalController::class);
+    Route::get('/rentals/{id}/return', [RentalController::class, 'returnForm'])->name('rentals.returnForm');
+    Route::post('/rentals/{id}/return', [RentalController::class, 'returnCar'])->name('rentals.returnCar');
 });
 
 require __DIR__.'/auth.php';
