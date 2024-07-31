@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use App\Models\Rental;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -121,13 +122,25 @@ class RentalController extends Controller
         return redirect()->route('rentals.index')->with('success', 'Data Rental Berhasil Dihapus.');
     }
 
+    public function returnForm($id)
+    {
+        $rental = Rental::findOrFail($id);
+
+        return view('pages.rentals.return', compact('rental'));
+    }
+
     public function returnCar(Request $request, $id)
     {
         $rental = Rental::findOrFail($id);
-        $rental->update(['returned_at' => now()]);
-
-        // Update status mobil menjadi 'available'
         $car = Car::findOrFail($rental->car_id);
+
+        // Update status rental menjadi 'returned'
+        $rental->update([
+            'returned_at' => Carbon::now(),
+            'status' => 'returned'
+        ]);
+
+        // Update status mobil menjadi available
         $car->update(['status' => 'available']);
 
         return redirect()->route('rentals.index')->with('success', 'Car returned successfully.');
