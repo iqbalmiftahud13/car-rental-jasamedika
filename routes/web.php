@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\RentalController;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['admin'])->group(function () {
+Route::middleware(['admin', 'auth'])->group(function () {
     Route::resource('car', CarController::class);
     Route::resource('rentals', RentalController::class);
     Route::get('/rentals/{id}/return', [RentalController::class, 'returnForm'])->name('rentals.returnForm');
@@ -31,7 +32,7 @@ Route::middleware(['admin'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/bookings', [RentalController::class, 'create'])->name('bookings.create');
+    Route::resource('booking', BookingController::class);
 });
 
 require __DIR__.'/auth.php';
