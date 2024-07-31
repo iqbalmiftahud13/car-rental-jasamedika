@@ -30,4 +30,8 @@ Route::middleware(['admin'])->group(function () {
     Route::post('/rentals/{id}/return', [RentalController::class, 'returnCar'])->name('rentals.returnCar');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/bookings', [RentalController::class, 'create'])->name('bookings.create');
+});
+
 require __DIR__.'/auth.php';

@@ -22,15 +22,25 @@
                     </li> --}}
                     <li class="menu-box">
                         <ul>
-                            <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
-                                        data-feather="server"></i><span>Data Master</span></a>
-                                <ul class="sidebar-submenu">
-                                    <li><a href="{{ route('car.index') }}">Mobil</a></li>
-                                </ul>
+                            @if(Auth::check() && Auth::user()->is_admin)
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title" href="javascript:void(0)"><i
+                                            data-feather="server"></i><span>Data Master</span></a>
+                                    <ul class="sidebar-submenu">
+                                        <li><a href="{{ route('car.index') }}">Mobil</a></li>
+                                    </ul>
+                                </li>
+                                <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                    href="{{ route('rentals.index') }}">
+                                    <i data-feather="trending-up"></i><span>Peminjaman Mobil</span></a>
+                                </li>
+                            @endif
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                href="{{ route('dashboard') }}">
+                                <i data-feather="dashboard"></i><span>Dashboard</span></a>
                             </li>
                             <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
-                                href="{{ route('rentals.index') }}">
-                                <i data-feather="trending-up"></i><span>Peminjaman Mobil</span></a>
+                                href="{{ route('bookings.create') }}">
+                                <i data-feather="trending-up"></i><span>Booking Mobil</span></a>
                             </li>
                         </ul>
                     </li>
