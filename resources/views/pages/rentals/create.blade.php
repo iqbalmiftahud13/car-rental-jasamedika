@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Pinjam Mobil')
-@section('page-title', 'Pinjam Mobil')
+@section('title', 'Booking')
+@section('page-title', 'Booking')
 
 @section('content')
     <div class="container">
