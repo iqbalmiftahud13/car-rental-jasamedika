@@ -10,4 +10,12 @@ class Car extends Model
     use HasFactory;
 
     protected $guarded = ['_token'];
+
+    protected $fillable = [
+        'brand',
+        'model',
+        'plate_number',
+        'daily_rental_price',
+        'status',
+    ];
 }

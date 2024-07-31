@@ -27,7 +27,7 @@ class RentalController extends Controller
      */
     public function create()
     {
-        $cars = Car::all();
+        $cars = Car::where('status', 'available')->get();
         return view('pages.rentals.create', compact('cars'));
     }
 
@@ -52,6 +52,9 @@ class RentalController extends Controller
             'total_days' => $request->total_days,
             'total_cost' => $request->total_cost,
         ]);
+
+        $car = Car::findOrFail($request->input('car_id'));
+        $car->update(['status' => 'ongoing']);
 
         return redirect()->route('rentals.index')->with('success', 'Data Rental Berhasil Ditambahkan.');
     }
@@ -104,9 +107,29 @@ class RentalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Rental $rental)
+    public function destroy($id)
     {
+        $rental = Rental::findOrFail($id);
+        $car = Car::findOrFail($rental->car_id);
+
+        // Update status mobil menjadi 'available'
+        $car->update(['status' => 'available']);
+
+        // Hapus data rental
         $rental->delete();
+        
         return redirect()->route('rentals.index')->with('success', 'Data Rental Berhasil Dihapus.');
+    }
+
+    public function returnCar(Request $request, $id)
+    {
+        $rental = Rental::findOrFail($id);
+        $rental->update(['returned_at' => now()]);
+
+        // Update status mobil menjadi 'available'
+        $car = Car::findOrFail($rental->car_id);
+        $car->update(['status' => 'available']);
+
+        return redirect()->route('rentals.index')->with('success', 'Car returned successfully.');
     }
 }

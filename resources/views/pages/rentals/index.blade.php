@@ -16,7 +16,7 @@
                 <div class="col-sm-12">
                     <div class="card-header">
                         <a href="{{ route('rentals.create') }}">
-                            <button type="button" class="btn btn-primary">Pinjam Mobil</button>
+                            <button type="button" class="btn btn-primary">Booking</button>
                         </a>
                     </div>
                     <div class="table-responsive">
