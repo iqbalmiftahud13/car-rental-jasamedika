@@ -31,6 +31,7 @@
                                                         <option 
                                                             value="{{ $car->id }}" 
                                                             data-daily_rate="{{ $car->daily_rate }}"
+                                                            {{ $car->status != 'available' ? 'disabled' : '' }}
                                                         >
                                                             {{ $car->brand }} - {{ $car->plate_number }}
                                                         </option>
