@@ -3,6 +3,7 @@
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\ReturnedController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,7 @@ Route::middleware(['admin', 'auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('booking', BookingController::class);
+    Route::resource('returned', ReturnedController::class);
 });
 
 require __DIR__.'/auth.php';
