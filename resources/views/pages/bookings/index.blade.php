@@ -10,9 +10,9 @@
                 <p>{{ $message }}</p>
             </div>
         @endif
-        <div class="my-5">
+        <div class="d-flex my-5">
             <a href="{{ route('booking.create') }}">
-                <button type="button" class="btn btn-primary">Booking</button>
+                <button type="button" class="btn btn-primary me-5">Booking</button>
             </a>
         </div>
         <div class="d-flex">

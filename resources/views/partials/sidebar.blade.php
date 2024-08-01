@@ -43,6 +43,10 @@
                                 href="{{ route('booking.index') }}">
                                 <i data-feather="trending-up"></i><span>Booking Mobil</span></a>
                             </li>
+                            <li class="sidebar-list"><a class="sidebar-link sidebar-title link-nav"
+                                href="{{ route('returned.index') }}">
+                                <i data-feather="trending-down"></i><span>Pengembalian Mobil</span></a>
+                            </li>
                             @endif
                         </ul>
                     </li>

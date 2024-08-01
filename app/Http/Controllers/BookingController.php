@@ -92,4 +92,42 @@ class BookingController extends Controller
     {
         //
     }
+
+    public function showReturnForm()
+    {
+        return view('pages.bookings.return');
+    }
+
+    public function returnCar(Request $request)
+    {
+        $request->validate([
+            'license_plate' => 'required|string|exists:cars,license_plate',
+        ]);
+
+        $car = Car::where('license_plate', $request->license_plate)->first();
+        $rental = Rental::where('car_id', $car->id)->where('status', 'ongoing')->first();
+
+        if (!$rental) {
+            return back()->withErrors(['error' => 'No ongoing rental found for this car.']);
+        }
+
+        $end_date = now();
+        $start_date = new \DateTime($rental->start_date);
+        $end_date = new \DateTime($end_date);
+        $interval = $start_date->diff($end_date);
+        $total_days = $interval->days + 1;
+        $total_cost = $total_days * $car->daily_rate;
+
+        $rental->update([
+            'end_date' => $end_date,
+            'total_days' => $total_days,
+            'total_cost' => $total_cost,
+            'status' => 'returned',
+        ]);
+
+        $car->update(['status' => 'available']);
+
+        return redirect()->route('booking.index')->with('success', 'Car returned successfully.');
+    }
+
 }
