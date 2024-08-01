@@ -16,6 +16,7 @@
             </a>
         </div>
         <div class="d-flex">
+        @if ($rentals->count() > 0)
             @foreach ($rentals as $rental)
                 <div class="card w-25 mx-2">
                     <div class="card-body">
@@ -30,6 +31,13 @@
                     </div>
                 </div>
             @endforeach
+        @else
+            <div class="card w-100">
+                <div class="card-body">
+                    <p class="text-center">Tidak ada data</p>
+                </div>
+            </div>
+        @endif
         </div>
     </div>
 @endsection

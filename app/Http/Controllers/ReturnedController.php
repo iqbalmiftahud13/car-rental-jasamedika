@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\Rental;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReturnedController extends Controller
@@ -37,7 +38,7 @@ class ReturnedController extends Controller
         $rental = Rental::where('car_id', $car->id)->where('status', 'ongoing')->first();
 
         if (!$rental) {
-            return back()->with('error', 'Tidak ditemukan penyewaan yang sedang berlangsung untuk mobil ini.');
+            return back()->with('error', 'Mobil tidak ditemukan atau tidak disewa oleh Anda.');
         }
 
         $end_date = now();
@@ -52,6 +53,7 @@ class ReturnedController extends Controller
             'total_days' => $total_days,
             'total_cost' => $total_cost,
             'status' => 'returned',
+            'returned_at' => Carbon::now(),
         ]);
 
         $car->update(['status' => 'available']);
