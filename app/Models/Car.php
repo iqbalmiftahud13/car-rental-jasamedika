@@ -15,7 +15,7 @@ class Car extends Model
         'brand',
         'model',
         'plate_number',
-        'daily_rental_price',
+        'daily_rate',
         'status',
     ];
 }

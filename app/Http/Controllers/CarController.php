@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
 class CarController extends Controller
@@ -32,14 +33,14 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'brand' => 'required',
-            'model' => 'required',
-            'plate_number' => 'required|unique:cars',
-            'daily_rate' => 'required|numeric',
-        ]);
+        $data = Validator::make($request->all(), [
+            'brand' => ['required'],
+            'model' => ['required'],
+            'plate_number' => ['required'],
+            'daily_rate' => ['required'],
+        ])->validate();
 
-        Car::create($request->all());
+        Car::create($data);
         return redirect()->route('car.index')->with('success', 'Data Berhasil Ditambahkan.');
     }
 
